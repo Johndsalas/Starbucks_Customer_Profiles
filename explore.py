@@ -4,9 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-
-
 ################################### Part I: What are the customers characteristics? ####################################
  
 def gender_pie(df):
@@ -37,6 +34,7 @@ def age_pie(df):
     plt.pie(values, labels=labels, autopct='%.0f%%', colors=['#ffc3a0', '#c0d6e4', '#cf98eb', '#77d198'])
     plt.title('The majority of Starbucks customers are between the age of 20 and 29')
     plt.show()
+
 
 def employment_pie(df):
     'Creates pie chart of age distribution'
@@ -86,6 +84,40 @@ def visit_pie(df):
             'Monthly',
             'Rarely or Never'] 
 
-    plt.pie(values, labels=labels, autopct='%.0f%%', colors=['#ffc3a0', '#c0d6e4', '#cf98eb', '#77d198'])
+    plt.pie(values, labels=labels, autopct='%.0f%%', colors=['#ffc3a0', '#c0d6e4', '#cf98eb'])
     plt.title('Most of Starbucks customers visit infrequently')
+    plt.show()
+
+
+def distance_pie(df):
+    'Creates a pie chart of the distance from Starbucks distribution'
+
+    values = [len(df.distance_away[(df.distance_away == 'more than 3km')]),
+          len(df.distance_away[(df.distance_away == '1km - 3km')]),
+          len(df.distance_away[(df.distance_away == 'within 1km')])]
+
+    labels = ['more than 3km', 
+              '1km - 3km',
+              'within 1km'] 
+
+    plt.pie(values, labels=labels, autopct='%.0f%%', colors=['#ffc3a0', '#c0d6e4', '#cf98eb'])
+    plt.title('1/2 of Starbucks customers live more than 3km from a Satrbucks')
+    plt.show()
+
+
+def spend_pie(df):
+    'Creates distribution of spent per visit distribution'
+
+    values = [len(df.spend_per_visit[df.spend_per_visit == 'Zero']), 
+          len(df.spend_per_visit[df.spend_per_visit == 'Less than RM20']),
+          len(df.spend_per_visit[df.spend_per_visit == 'Around RM20 - RM40']),
+          len(df.spend_per_visit[(df.spend_per_visit == 'More than RM40')])]
+
+    labels = ['Zero', 
+            'Less than RM20',
+            'Around RM20 - RM40',
+            'More than RM40'] 
+
+    plt.pie(values, labels=labels, autopct='%.0f%%', colors=['#ffc3a0', '#c0d6e4', '#cf98eb', '#77d198'])
+    plt.title('A majority of Starbucks customers spend less than 20RM per visit')
     plt.show()
