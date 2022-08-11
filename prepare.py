@@ -62,6 +62,20 @@ def prepare_customer_survey(df):
     # apply fix_never to dining_type to consolidate all never responces as never
     df['dining_type'] = df['dining_type'].apply(fix_never)
 
+
+    df['promotion_importance'] = df.promotion_importance.apply(get_importance_string)
+    df['gathering_likelyhood'] = df.gathering_likelyhood.apply(get_likelyhood_string)
+
+    ratings = ['brand_rating',
+               'price_rating',
+               'ambiance_rating',
+               'wifi_rating',
+               'service_rating']
+
+    for rating in ratings:
+        
+        df[f'{rating}'] = df[f'{rating}'].apply(get_rating_string)
+
     return df
 
 ############################################## Helper Functions ################################################
@@ -77,3 +91,45 @@ def fix_never(value):
     else:
         
         return value
+
+def get_importance_string(value):
+    
+    if value <= 2:
+        
+        return "unimportant"
+    
+    elif value == 3:
+        
+        return "neutral"
+    
+    elif value >= 4:
+        
+        return "important"
+    
+def get_likelyhood_string(value):
+    
+    if value <= 2:
+        
+        return "unlikely"
+    
+    elif value == 3:
+        
+        return "neutral"
+    
+    elif value >= 4:
+        
+        return "likely"
+    
+def get_rating_string(value):
+    
+    if value <= 2:
+
+        return "negative"
+
+    elif value == 3:
+
+        return "neutral"
+
+    elif value >= 4:
+
+        return "positive"
