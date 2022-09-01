@@ -59,6 +59,29 @@ def prepare_customer_survey(df):
 
         df[f'{item}'] = df['most_frequent_purchase'].str.contains(f'{item}')
 
+    # Get a list of values from promotions from column
+    value_list = df.promotions_from.to_list()
+
+    # holds final list of seperated values
+    item_list = []
+
+    # Splits each value by ';' and adds it to the item list if it is not already in the list 
+    for value in value_list:
+    
+        value = value.split(';')
+    
+        for item in value:
+        
+            if item not in item_list:
+            
+                item_list.append(item)
+
+    # Creates a dummy column for each item in the item list 
+    # for values for values in promotions from that contain the item
+    for item in item_list:
+
+        df[f'{item}'] = df['promotions_from'].str.contains(f'{item}')
+
     # apply fix_never to dining_type to consolidate all never responces as never
     df['dining_type'] = df['dining_type'].apply(fix_never)
 
@@ -67,13 +90,13 @@ def prepare_customer_survey(df):
     df['gathering_likelyhood'] = df.gathering_likelyhood.apply(get_likelyhood_string)
 
     ratings = ['brand_rating',
-               'price_rating',
-               'ambiance_rating',
-               'wifi_rating',
-               'service_rating']
+                'price_rating',
+                'ambiance_rating',
+                'wifi_rating',
+                'service_rating']
 
     for rating in ratings:
-        
+            
         df[f'{rating}'] = df[f'{rating}'].apply(get_rating_string)
 
     return df
